@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Detail</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            text-align: center;
+            overflow: auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Detail</h2>
+        <div id="orderDetailContent">
+            <!-- Content will be dynamically added here -->
+        </div>
+        <button onclick="location.href='index.html'"></button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // Function to fetch and display order details
+        function displayOrderDetails() {
+            // Assuming the server provides an endpoint to fetch order details, adjust the URL accordingly
+            $.ajax({
+                url: 'http://localhost:8080/readAll', // Update the URL
+                method: 'GET',
+                success: function (result) {
+                    if (result && result.length > 0) {
+                        // Assuming you want to display details of the first item in the array
+                        var orderDetailContent = "<p>Order ID: " + result[0].id + "</p>" +
+                                                 "<p>Nama Menu: " + result[0].namamenu + "</p>" +
+                                                 "<p>Harga: " + result[0].harga + "</p>";
+
+                        // Update the content of the orderDetailContent div
+                        document.getElementById("orderDetailContent").innerHTML = orderDetailContent;
+                    } else {
+                        // Handle the case where there are no results
+                        document.getElementById("orderDetailContent").innerHTML = "No order details available.";
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Call the function to display order details when the page loads
+        displayOrderDetails();
+    </script>
+</body>
+</html>
